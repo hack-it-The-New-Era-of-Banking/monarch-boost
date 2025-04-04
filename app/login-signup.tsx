@@ -9,7 +9,7 @@ import {
   Platform, 
   ScrollView,
   Dimensions,
-  Animated
+  SafeAreaView
 } from 'react-native';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
@@ -24,6 +24,7 @@ export default function LoginSignup() {
   const [loading, setLoading] = useState(false);
 
   const handleAuth = async () => {
+    // ... existing authentication logic ...
     if (!email || !password || (!isLogin && !name)) {
       alert('Please fill all fields');
       return;
@@ -64,143 +65,117 @@ export default function LoginSignup() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <StatusBar style="light" />
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       
-      <View style={styles.backgroundCircles}>
-        <View style={styles.circle1} />
-        <View style={styles.circle2} />
-      </View>
-      
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
-          <View style={styles.logoContainer}>
-            <View style={styles.qrIconContainer}>
-              <Text style={styles.qrIcon}>■</Text>
+      <KeyboardAvoidingView
+        style={styles.keyboardView}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.header}>
+            <View style={styles.logoContainer}>
+              <Ionicons name="qr-code" size={32} color="#3B82F6" />
             </View>
+            <Text style={styles.title}>HD QR Code</Text>
+            <Text style={styles.subtitle}>Secure Digital Identity</Text>
           </View>
-          <Text style={styles.title}>HD QR Code</Text>
-          <Text style={styles.subtitle}>Secure Digital Identity</Text>
-        </View>
 
-        <View style={styles.formContainer}>
-          <Text style={styles.formTitle}>
-            {isLogin ? 'Welcome Back' : 'Create Account'}
-          </Text>
-          
-          {!isLogin && (
+          <View style={styles.formContainer}>
+            <Text style={styles.formTitle}>
+              {isLogin ? 'Welcome Back' : 'Create Account'}
+            </Text>
+            
+            {!isLogin && (
+              <View style={styles.inputContainer}>
+                <Ionicons name="person-outline" size={22} color="#3B82F6" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Full Name"
+                  placeholderTextColor="#94A3B8"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize="words"
+                />
+              </View>
+            )}
+            
             <View style={styles.inputContainer}>
-              <Ionicons name="person-outline" size={22} color="#FDBB2D" style={styles.inputIcon} />
+              <Ionicons name="mail-outline" size={22} color="#3B82F6" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
-                placeholder="Full Name"
-                placeholderTextColor="#8A8A8A"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize="words"
+                placeholder="Email Address"
+                placeholderTextColor="#94A3B8"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
               />
             </View>
-          )}
-          
-          <View style={styles.inputContainer}>
-            <Ionicons name="mail-outline" size={22} color="#FDBB2D" style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Email Address"
-              placeholderTextColor="#8A8A8A"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-          
-          <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={22} color="#FDBB2D" style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="#8A8A8A"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
-          
-          {isLogin && (
-            <TouchableOpacity style={styles.forgotPassword}>
-              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-            </TouchableOpacity>
-          )}
-          
-          <TouchableOpacity 
-            style={[styles.button, loading && styles.buttonDisabled]}
-            onPress={handleAuth}
-            disabled={loading}
-          >
-            {loading ? (
-              <Text style={styles.buttonText}>
-                {isLogin ? 'Logging in...' : 'Creating account...'}
-              </Text>
-            ) : (
-              <Text style={styles.buttonText}>
-                {isLogin ? 'Login' : 'Sign Up'}
-              </Text>
+            
+            <View style={styles.inputContainer}>
+              <Ionicons name="lock-closed-outline" size={22} color="#3B82F6" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="#94A3B8"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
+            
+            {isLogin && (
+              <TouchableOpacity style={styles.forgotPassword}>
+                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
-          
-          <View style={styles.switchContainer}>
-            <Text style={styles.switchText}>
-              {isLogin ? "Don't have an account?" : "Already have an account?"}
-            </Text>
-            <TouchableOpacity onPress={toggleAuthMode}>
-              <Text style={styles.switchButton}>
-                {isLogin ? 'Sign Up' : 'Login'}
-              </Text>
+            
+            <TouchableOpacity 
+              style={[styles.button, loading && styles.buttonDisabled]}
+              onPress={handleAuth}
+              disabled={loading}
+            >
+              {loading ? (
+                <Text style={styles.buttonText}>
+                  {isLogin ? 'Logging in...' : 'Creating account...'}
+                </Text>
+              ) : (
+                <Text style={styles.buttonText}>
+                  {isLogin ? 'Login' : 'Sign Up'}
+                </Text>
+              )}
             </TouchableOpacity>
+            
+            <View style={styles.switchContainer}>
+              <Text style={styles.switchText}>
+                {isLogin ? "Don't have an account?" : "Already have an account?"}
+              </Text>
+              <TouchableOpacity onPress={toggleAuthMode}>
+                <Text style={styles.switchButton}>
+                  {isLogin ? 'Sign Up' : 'Login'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
-const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121921',
+    backgroundColor: '#FFFFFF',
   },
-  backgroundCircles: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  circle1: {
-    position: 'absolute',
-    width: width * 1.2,
-    height: width * 1.2,
-    borderRadius: width * 0.6,
-    backgroundColor: '#1A2530',
-    top: -width * 0.5,
-    right: -width * 0.3,
-  },
-  circle2: {
-    position: 'absolute',
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.4,
-    backgroundColor: '#232F3E',
-    bottom: -width * 0.2,
-    left: -width * 0.2,
+  keyboardView: {
+    flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: 24,
   },
   header: {
     alignItems: 'center',
@@ -210,53 +185,55 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 16,
-    backgroundColor: '#FDBB2D',
+    backgroundColor: '#EFF6FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  qrIconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  qrIcon: {
-    fontSize: 24,
-    color: '#121921',
-    fontWeight: 'bold',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FDBB2D',
+    color: '#1E293B',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.8,
+    color: '#64748B',
   },
   formContainer: {
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: 24,
     marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
   },
   formTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#1E293B',
     marginBottom: 24,
     textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: '#F1F5F9',
     borderRadius: 12,
     marginBottom: 16,
     paddingHorizontal: 16,
     height: 56,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
   },
   inputIcon: {
     marginRight: 12,
@@ -264,7 +241,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
-    color: '#FFFFFF',
+    color: '#1E293B',
     fontSize: 16,
   },
   forgotPassword: {
@@ -272,11 +249,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   forgotPasswordText: {
-    color: '#FDBB2D',
+    color: '#3B82F6',
     fontSize: 14,
   },
   button: {
-    backgroundColor: '#FDBB2D',
+    backgroundColor: '#3B82F6',
     height: 56,
     borderRadius: 12,
     justifyContent: 'center',
@@ -287,7 +264,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
-    color: '#121921',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -298,12 +275,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   switchText: {
-    color: '#FFFFFF',
-    opacity: 0.7,
+    color: '#64748B',
     fontSize: 14,
   },
   switchButton: {
-    color: '#FDBB2D',
+    color: '#3B82F6',
     fontSize: 14,
     fontWeight: 'bold',
     marginLeft: 8,

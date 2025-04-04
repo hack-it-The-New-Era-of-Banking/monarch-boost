@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'expo-router';
 import { View, Text, ActivityIndicator, StyleSheet, Animated, Dimensions, Image } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { StatusBar } from 'expo-status-bar';
 
 export default function SplashScreen() {
   const [loading, setLoading] = useState(true);
@@ -68,10 +69,7 @@ export default function SplashScreen() {
   if (loading) {
     return (
       <View style={styles.container}>
-        <View style={styles.backgroundCircles}>
-          <View style={styles.circle1} />
-          <View style={styles.circle2} />
-        </View>
+        <StatusBar style="dark" />
         
         <View style={styles.content}>
           <Animated.View 
@@ -83,9 +81,7 @@ export default function SplashScreen() {
               }
             ]}
           >
-            <View style={styles.qrIconContainer}>
-              <Text style={styles.qrIcon}>■</Text>
-            </View>
+            <Text style={styles.qrIcon}>■</Text>
           </Animated.View>
           
           <Animated.View style={[styles.textContainer, { opacity: logoOpacity }]}>
@@ -94,7 +90,7 @@ export default function SplashScreen() {
           </Animated.View>
           
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="small" color="#FDBB2D" />
+            <ActivityIndicator size="small" color="#3B82F6" />
           </View>
         </View>
       </View>
@@ -103,42 +99,16 @@ export default function SplashScreen() {
 
   //this is just for testing purposes for demo purposes
   if (1) return <Redirect href="/login-signup" />;
-
-  return <Redirect href="/dashboard" />;
 }
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121921',
+    backgroundColor: '#FFFFFF',
     position: 'relative',
-    overflow: 'hidden',
-  },
-  backgroundCircles: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  circle1: {
-    position: 'absolute',
-    width: width * 1.2,
-    height: width * 1.2,
-    borderRadius: width * 0.6,
-    backgroundColor: '#1A2530',
-    top: -width * 0.5,
-    right: -width * 0.3,
-  },
-  circle2: {
-    position: 'absolute',
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.4,
-    backgroundColor: '#232F3E',
-    bottom: -width * 0.2,
-    left: -width * 0.2,
   },
   content: {
     alignItems: 'center',
@@ -149,18 +119,19 @@ const styles = StyleSheet.create({
     width: width * 0.25,
     height: width * 0.25,
     borderRadius: 16,
-    backgroundColor: '#FDBB2D',
+    backgroundColor: '#EFF6FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-  },
-  qrIconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
   qrIcon: {
     fontSize: 32,
-    color: '#121921',
+    color: '#3B82F6',
     fontWeight: 'bold',
   },
   textContainer: {
@@ -169,12 +140,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FDBB2D',
+    color: '#1E293B',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 20,
-    color: '#FFFFFF',
+    color: '#64748B',
     marginBottom: 40,
   },
   loadingContainer: {
