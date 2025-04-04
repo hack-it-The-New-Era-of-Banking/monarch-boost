@@ -50,8 +50,8 @@ export default function KYCChecker() {
   }, []);
   
   const handleGenerateDigitalID = () => {
-    // Navigate to digital ID generation or dashboard
-    router.replace('/');
+    // Navigate to QR code generation page instead of home
+    router.push('/qr-code');
   };
   
   return (
