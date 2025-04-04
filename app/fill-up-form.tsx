@@ -27,6 +27,7 @@ const COUNTRIES = [
   "Germany",
   "France",
   "Japan",
+  "Philippines",
   "Other"
 ];
 
@@ -44,15 +45,16 @@ export default function FillUpForm() {
   const [submitting, setSubmitting] = useState(false);
   
   // Form fields
+  // Form fields
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
-  const [country, setCountry] = useState('United States');
+  const [country, setCountry] = useState('Philippines');
   const [postalCode, setPostalCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [nationality, setNationality] = useState('');
   const [idType, setIdType] = useState('passport');
+  
+  // Removed address and nationality state variables
   
   // Dropdown state
   const [countryModalVisible, setCountryModalVisible] = useState(false);
@@ -82,7 +84,7 @@ export default function FillUpForm() {
   }, []);
   
   const validateForm = () => {
-    if (!fullName || !dateOfBirth || !address || !city || !country || !postalCode || !phoneNumber || !nationality) {
+    if (!fullName || !dateOfBirth || !city || !country || !postalCode || !phoneNumber) {
       alert('Please fill in all required fields');
       return false;
     }
@@ -94,9 +96,9 @@ export default function FillUpForm() {
       return false;
     }
     
-    // Basic postal code validation
-    if (postalCode.length < 5) {
-      alert('Please enter a valid postal code');
+    // Basic postal code validation - now accepts exactly 4 digits for Philippines
+    if (postalCode.length !== 4) {
+      alert('Please enter a valid postal code (4 digits)');
       return false;
     }
     
@@ -129,12 +131,10 @@ export default function FillUpForm() {
           ...parsedUser,
           fullName,
           dateOfBirth,
-          address,
           city,
           country,
           postalCode,
           phoneNumber,
-          nationality,
           idType,
           formCompleted: true
         };
@@ -194,7 +194,7 @@ export default function FillUpForm() {
         <ScrollView style={styles.scrollView}>
           <View style={styles.formContainer}>
             <Text style={styles.formDescription}>
-              Please provide your personal information for identity verification.
+              Please provide your basic information for identity verification.
               This information will be used to verify your documents.
             </Text>
             
@@ -228,20 +228,6 @@ export default function FillUpForm() {
               </View>
             </View>
             
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Address</Text>
-              <View style={styles.inputContainer}>
-                <Ionicons name="home-outline" size={20} color="#3B82F6" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your street address"
-                  placeholderTextColor="#94A3B8"
-                  value={address}
-                  onChangeText={setAddress}
-                />
-              </View>
-            </View>
-            
             <View style={styles.rowInputs}>
               <View style={[styles.inputGroup, { flex: 1, marginRight: 8 }]}>
                 <Text style={styles.inputLabel}>City</Text>
@@ -266,14 +252,10 @@ export default function FillUpForm() {
                     value={postalCode}
                     onChangeText={setPostalCode}
                     keyboardType="number-pad"
+                    maxLength={4}
                   />
                 </View>
               </View>
-            </View>
-            
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Country</Text>
-              {renderDropdown('Country', country, () => setCountryModalVisible(true), 'globe-outline')}
             </View>
             
             <View style={styles.inputGroup}>
@@ -282,25 +264,11 @@ export default function FillUpForm() {
                 <Ionicons name="call-outline" size={20} color="#3B82F6" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="+1 (123) 456-7890"
+                  placeholder="+63 XXX XXX XXXX"
                   placeholderTextColor="#94A3B8"
                   value={phoneNumber}
                   onChangeText={setPhoneNumber}
                   keyboardType="phone-pad"
-                />
-              </View>
-            </View>
-            
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Nationality</Text>
-              <View style={styles.inputContainer}>
-                <Ionicons name="flag-outline" size={20} color="#3B82F6" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your nationality"
-                  placeholderTextColor="#94A3B8"
-                  value={nationality}
-                  onChangeText={setNationality}
                 />
               </View>
             </View>
