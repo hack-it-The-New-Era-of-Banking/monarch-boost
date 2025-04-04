@@ -92,7 +92,7 @@ export default function Dashboard() {
           <View style={styles.userIconContainer}>
             <Ionicons name="person" size={40} color="#FFFFFF" />
           </View>
-          <Text style={styles.userName}>{user?.name || 'User'}</Text>
+          <Text style={styles.userName}>{user?.fullName || user?.name || 'User'}</Text>
           <Text style={styles.userEmail}>{user?.email || 'No email'}</Text>
           <View style={styles.verificationBadge}>
             <Ionicons name="shield-checkmark" size={16} color="#FFFFFF" />
