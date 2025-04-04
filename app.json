@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "temp-expo-app",
-    "slug": "temp-expo-app",
+    "name": "AEID",
+    "slug": "aeid",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
