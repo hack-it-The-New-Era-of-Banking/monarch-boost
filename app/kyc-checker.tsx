@@ -7,7 +7,6 @@ import {
   ScrollView,
   ActivityIndicator,
   SafeAreaView,
-  Image,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
@@ -79,17 +78,31 @@ export default function KYCChecker() {
             </Text>
           </View>
           
-          {params.documentImage && (
-            <View style={styles.documentPreviewContainer}>
-              <Image 
-                source={{ uri: params.documentImage }} 
-                style={styles.documentImage} 
-              />
-              <View style={styles.documentOverlay}>
-                <Ionicons name="checkmark-circle" size={40} color="#10B981" />
+          <View style={styles.kycProcessContainer}>
+            <View style={styles.processStep}>
+              <View style={styles.processIconContainer}>
+                <Ionicons name="document-text-outline" size={24} color="#3B82F6" />
               </View>
+              <Text style={styles.processStepTitle}>Document Verification</Text>
+              <Text style={styles.processStepText}>Your ID document is being verified for authenticity</Text>
             </View>
-          )}
+            
+            <View style={styles.processStep}>
+              <View style={styles.processIconContainer}>
+                <Ionicons name="person-outline" size={24} color="#3B82F6" />
+              </View>
+              <Text style={styles.processStepTitle}>Identity Confirmation</Text>
+              <Text style={styles.processStepText}>Confirming your personal information matches official records</Text>
+            </View>
+            
+            <View style={styles.processStep}>
+              <View style={styles.processIconContainer}>
+                <Ionicons name="shield-outline" size={24} color="#3B82F6" />
+              </View>
+              <Text style={styles.processStepTitle}>Security Checks</Text>
+              <Text style={styles.processStepText}>Running security and compliance checks</Text>
+            </View>
+          </View>
         </View>
         
         <View style={styles.verificationSection}>
@@ -234,29 +247,36 @@ const styles = StyleSheet.create({
     color: '#0369A1',
     lineHeight: 20,
   },
-  documentPreviewContainer: {
-    width: '100%',
-    height: 180,
-    borderRadius: 12,
-    overflow: 'hidden',
-    backgroundColor: '#F1F5F9',
+  kycProcessContainer: {
+    marginTop: 16,
+  },
+  processStep: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 16,
-    position: 'relative',
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    padding: 16,
   },
-  documentImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  documentOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  processIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#EFF6FF',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+  },
+  processStepTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1E293B',
+    flex: 1,
+  },
+  processStepText: {
+    fontSize: 14,
+    color: '#64748B',
+    flex: 2,
   },
   verificationSection: {
     marginBottom: 24,

@@ -24,8 +24,14 @@ export default function AIChecker() {
   const [verificationStatus, setVerificationStatus] = useState<'pending' | 'success' | 'failed'>('pending');
   const [verificationDetails, setVerificationDetails] = useState<any[]>([]);
   const [userData, setUserData] = useState<any>(null);
+  const [decodedImage, setDecodedImage] = useState<string>('');
   
   useEffect(() => {
+    // Decode the image URI
+    if (params.documentImage) {
+      setDecodedImage(decodeURIComponent(params.documentImage));
+    }
+    
     // Load user data from SecureStore
     const loadUserData = async () => {
       try {
@@ -39,7 +45,32 @@ export default function AIChecker() {
     };
     
     loadUserData();
-  }, []);
+  }, [params.documentImage]);
+
+  // Update the document image display
+  // ...
+  {decodedImage && (
+    <View style={styles.documentPreviewContainer}>
+      <Image 
+        source={{ uri: decodedImage }} 
+        style={styles.documentImage} 
+      />
+      {!loading && verificationStatus === 'success' && (
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Ionicons name="checkmark-circle" size={40} color="#10B981" />
+        </View>
+      )}
+    </View>
+  )}
   
   useEffect(() => {
     // Simulate AI verification process

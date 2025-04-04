@@ -64,7 +64,7 @@ export default function Verify() {
       pathname: '/ai-checker',
       params: {
         documentType: selectedDocument,
-        documentImage: documentImage,
+        documentImage: encodeURIComponent(documentImage),
       },
     });
   };
