@@ -13,6 +13,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import * as Clipboard from 'expo-clipboard';
+import * as SecureStore from 'expo-secure-store';
 
 export default function QRCodeScreen() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,20 @@ export default function QRCodeScreen() {
   useEffect(() => {
     const generateDID = async () => {
       try {
+        // Check if we already have a DID stored
+        const storedDID = await SecureStore.getItemAsync('userDID');
+        const storedQRUrl = await SecureStore.getItemAsync('userQRUrl');
+        
+        if (storedDID && storedQRUrl) {
+          // Use the stored values
+          setDid(storedDID);
+          setQrCodeUrl(storedQRUrl);
+          setGeneratingDID(false);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          setLoading(false);
+          return;
+        }
+        
         // Simulate DID generation
         await new Promise(resolve => setTimeout(resolve, 2000));
         
@@ -34,6 +49,10 @@ export default function QRCodeScreen() {
         // Generate QR code using the API
         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(randomDID)}`;
         setQrCodeUrl(qrApiUrl);
+        
+        // Store the DID and QR URL for future use
+        await SecureStore.setItemAsync('userDID', randomDID);
+        await SecureStore.setItemAsync('userQRUrl', qrApiUrl);
         
         // Simulate loading the QR code
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -67,8 +86,32 @@ export default function QRCodeScreen() {
     }
   };
   
-  const handleFinish = () => {
-    router.replace('/');
+  const handleFinish = async () => {
+    try {
+      // Get the current user data
+      const userData = await SecureStore.getItemAsync('user');
+      if (userData) {
+        // Parse the user data
+        const user = JSON.parse(userData);
+        
+        // Update the user with the DID
+        const updatedUser = {
+          ...user,
+          did: did,
+          qrCodeUrl: qrCodeUrl,
+          verified: true
+        };
+        
+        // Save the updated user data
+        await SecureStore.setItemAsync('user', JSON.stringify(updatedUser));
+      }
+      
+      // Navigate to dashboard
+      router.replace('/dashboard');
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      router.replace('/dashboard');
+    }
   };
   
   return (

@@ -77,7 +77,7 @@ export default function LoginSignup() {
             <View style={styles.logoContainer}>
               <Ionicons name="qr-code" size={32} color="#3B82F6" />
             </View>
-            <Text style={styles.title}>HD QR Code</Text>
+            <Text style={styles.title}>AEID QR Code</Text>
             <Text style={styles.subtitle}>Secure Digital Identity</Text>
           </View>
 
