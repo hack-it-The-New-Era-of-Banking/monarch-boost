@@ -83,24 +83,30 @@ export default function KYCChecker() {
               <View style={styles.processIconContainer}>
                 <Ionicons name="document-text-outline" size={24} color="#3B82F6" />
               </View>
-              <Text style={styles.processStepTitle}>Document Verification</Text>
-              <Text style={styles.processStepText}>Your ID document is being verified for authenticity</Text>
+              <View style={{flex: 1}}>
+                <Text style={styles.processStepTitle}>Document Verification</Text>
+                <Text style={styles.processStepText}>Your ID document is being verified for authenticity</Text>
+              </View>
             </View>
             
             <View style={styles.processStep}>
               <View style={styles.processIconContainer}>
                 <Ionicons name="person-outline" size={24} color="#3B82F6" />
               </View>
-              <Text style={styles.processStepTitle}>Identity Confirmation</Text>
-              <Text style={styles.processStepText}>Confirming your personal information matches official records</Text>
+              <View style={{flex: 1}}>
+                <Text style={styles.processStepTitle}>Identity Confirmation</Text>
+                <Text style={styles.processStepText}>Confirming your personal information matches official records</Text>
+              </View>
             </View>
             
             <View style={styles.processStep}>
               <View style={styles.processIconContainer}>
                 <Ionicons name="shield-outline" size={24} color="#3B82F6" />
               </View>
-              <Text style={styles.processStepTitle}>Security Checks</Text>
-              <Text style={styles.processStepText}>Running security and compliance checks</Text>
+              <View style={{flex: 1}}>
+                <Text style={styles.processStepTitle}>Security Checks</Text>
+                <Text style={styles.processStepText}>Running security and compliance checks</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -252,7 +258,7 @@ const styles = StyleSheet.create({
   },
   processStep: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 16,
     backgroundColor: '#F8FAFC',
     borderRadius: 12,
@@ -277,6 +283,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#64748B',
     flex: 2,
+    lineHeight: 20,
   },
   verificationSection: {
     marginBottom: 24,

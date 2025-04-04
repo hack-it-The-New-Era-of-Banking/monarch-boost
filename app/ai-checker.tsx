@@ -437,9 +437,19 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     backgroundColor: '#3B82F6',
+    height: 56,
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   retryButton: {
     backgroundColor: '#EF4444',
+    height: 56,
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actionButtonText: {
     color: '#FFFFFF',
