@@ -24,7 +24,6 @@ export default function LoginSignup() {
   const [loading, setLoading] = useState(false);
 
   const handleAuth = async () => {
-    // ... existing authentication logic ...
     if (!email || !password || (!isLogin && !name)) {
       alert('Please fill all fields');
       return;
@@ -38,7 +37,6 @@ export default function LoginSignup() {
       
       // Create a mock user object
       const user = {
-        did: `did:example:${Math.random().toString(36).substring(2, 15)}`,
         email,
         name: isLogin ? 'User' : name,
         verified: false,
@@ -48,8 +46,8 @@ export default function LoginSignup() {
       // Store user in SecureStore
       await SecureStore.setItemAsync('user', JSON.stringify(user));
       
-      // Navigate to verification screen
-      router.replace('/verify');
+      // Navigate to fill-up-form instead of verify
+      router.replace('/fill-up-form');
     } catch (error) {
       console.error('Authentication error:', error);
       alert('Authentication failed. Please try again.');
