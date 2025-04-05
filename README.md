@@ -1,50 +1,79 @@
-# Welcome to your Expo app 👋
+# AEID (A.E.I.D.) – QR Digital Identity App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+AEID (short for **Automated Encrypted Identity**) is a privacy-first, mobile-based identity system designed to streamline digital verification through QR codes. Users can securely upload documents, get AI and KYC-verified, and generate a tamper-proof digital ID stored on their device and backed by decentralized ID logic.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
+- Upload and locally store verification documents
+- AI and KYC identity verification (Gemini 1.5 + demo KYC API)
+- Generate a DID (Decentralized Identity)
+- Create and display a QR code for identity sharing
+- 2FA security (Face ID, OTP)
+- Offline-first architecture with encrypted storage support
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 🧱 Tech Stack
 
-   ```bash
-    npx expo start
-   ```
+### ✅ Frontend
+- React Native (Expo)
+- Expo Router
+- TypeScript
+- EAS Build
 
-In the output, you'll find options to open the app in a
+### 📦 Storage
+- Firebase (Firestore for user info)
+- QR Code
+- Encrypted Local Storage (optional)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 🔐 Verification & Identity
+- AI Verification (Gemini 1.5)
+- KYC Verification (demo-ready)
+- DID Generation
+- 2FA (Face ID, OTP)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📲 Build Instructions
 
-When you're ready, run:
-
+### Android:
 ```bash
-npm run reset-project
+npx eas build -p android --profile preview
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### iOS:
+```bash
+npx eas build -p ios
+```
+*Apple Developer Account required for iOS builds*
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📁 Folder Structure (Simplified)
+```
+.expo/
+.vscode/
+app/
+assets/
+node_modules/
+scripts/
+.gitignore
+app.json
+eas.json
+expo-env.d.ts
+package-lock.json
+package.json
+README.md
+tsconfig.json
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 📩 Contact / Collaboration
+Want to contribute or integrate AEID into your fintech product? Reach out!
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+Made with ❤️ using Expo by Team Monarch.
